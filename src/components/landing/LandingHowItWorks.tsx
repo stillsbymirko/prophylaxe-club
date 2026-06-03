@@ -64,7 +64,7 @@ export function LandingHowItWorks() {
           </p>
         </div>
         <Link
-          href="/denspoint"
+          href="/praxis-mueller"
           className="inline-flex w-full shrink-0 items-center justify-center gap-2 rounded-2xl border border-sage/20 bg-surface px-5 py-3 text-sm font-medium text-sage transition-colors hover:border-sage/40 hover:bg-sage hover:text-cream sm:w-auto sm:py-2.5"
         >
           Demo ansehen

@@ -57,7 +57,7 @@ export default function DatenschutzPage() {
         <li>Praxisname</li>
         <li>Buchungs-URL</li>
         <li>Telefonnummer der Praxis</li>
-        <li>Individueller Slug (z.&nbsp;B. „denspoint“)</li>
+        <li>Individueller Slug (z.&nbsp;B. „praxis-mueller“)</li>
         <li>
           Optional: E-Mail-Adresse der Praxis (nur wenn beim Erstellen angegeben
           — zum Versand des Bearbeitungs-Links)

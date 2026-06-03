@@ -43,7 +43,7 @@ function parseFlyer(raw: unknown): FlyerSettings | undefined {
 function validatePracticeFields(
   body: Record<string, unknown>,
 ): PracticeData | { error: string } {
-  const { name, bookingUrl, phone, slug, logoBase64, flyer } = body;
+  const { name, bookingUrl, phone, address, slug, logoBase64, flyer } = body;
 
   if (typeof name !== "string" || !name.trim()) {
     return { error: "Praxisname fehlt." };
@@ -67,6 +67,10 @@ function validatePracticeFields(
     phone: phone.trim(),
     slug: slugify(slug.trim()),
   };
+
+  if (typeof address === "string" && address.trim()) {
+    data.address = address.trim();
+  }
 
   if (typeof logoBase64 === "string" && logoBase64.startsWith("data:image/")) {
     if (logoBase64.length > 700_000) {
@@ -163,6 +167,7 @@ export async function POST(request: Request) {
         logoBase64: result.logoBase64 ?? existing.logoBase64,
         flyer: result.flyer ?? existing.flyer,
         ownerEmail: ownerEmail ?? existing.ownerEmail,
+        address: result.address ?? existing.address,
       };
 
       await savePractice(stored);

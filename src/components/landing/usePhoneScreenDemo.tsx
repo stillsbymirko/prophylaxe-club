@@ -8,6 +8,7 @@ export type PhoneDemoPhase =
   | "add-sheet"
   | "success"
   | "calendar"
+  | "notification"
   | null;
 
 type PointerTarget = "option" | "download" | "confirm";
@@ -46,6 +47,7 @@ export function usePhoneScreenDemo({
   const [pointer, setPointer] = useState<{ x: number; y: number } | null>(null);
   const [tapActive, setTapActive] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
+  const [notificationTick, setNotificationTick] = useState(0);
 
   const pausedRef = useRef(paused);
   pausedRef.current = paused;
@@ -150,13 +152,19 @@ export function usePhoneScreenDemo({
 
       schedule(() => {
         if (cancelled || pausedRef.current) return;
+        setNotificationTick((tick) => tick + 1);
+        setPhase("notification");
+      }, startAt + 9600);
+
+      schedule(() => {
+        if (cancelled || pausedRef.current) return;
         setPhase(null);
-      }, startAt + 9800);
+      }, startAt + 12200);
 
       schedule(() => {
         if (cancelled || pausedRef.current) return;
         runCycle(700);
-      }, startAt + 10600);
+      }, startAt + 13000);
     };
 
     schedule(() => runCycle(0), 400);
@@ -168,7 +176,7 @@ export function usePhoneScreenDemo({
     };
   }, [enabled, paused, confirmRef, downloadRef, optionRef, phoneRef]);
 
-  return { phase, pointer, tapActive, isRunning };
+  return { phase, pointer, tapActive, isRunning, notificationTick };
 }
 
 interface PhoneDemoClickIndicatorProps {

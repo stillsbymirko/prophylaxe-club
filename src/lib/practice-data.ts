@@ -9,6 +9,8 @@ export interface PracticeData {
   name: string;
   bookingUrl: string;
   phone: string;
+  /** Straße, PLZ und Ort — erscheint im Kalendertermin */
+  address?: string;
   slug: string;
   logoBase64?: string;
   flyer?: FlyerSettings;

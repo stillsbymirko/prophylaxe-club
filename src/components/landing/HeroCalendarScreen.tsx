@@ -1,6 +1,6 @@
 import { formatGermanDate, getHalfYearReminder } from "@/lib/date-logic";
 import type { PracticeData } from "@/lib/practice-data";
-import { Bell, Calendar, ChevronLeft, Signal, Wifi } from "lucide-react";
+import { Bell, Calendar, ChevronLeft, MapPin, Signal, Wifi } from "lucide-react";
 import type { ReactNode } from "react";
 
 interface HeroCalendarScreenProps {
@@ -49,6 +49,13 @@ export function HeroCalendarScreen({ practice }: HeroCalendarScreenProps) {
               label={formatGermanDate(reminder.date)}
               detail={timeRange}
             />
+            {practice.address && (
+              <CalendarRow
+                icon={<MapPin className="h-3.5 w-3.5 text-sage" />}
+                label="Ort"
+                detail={practice.address}
+              />
+            )}
             <CalendarRow
               icon={<Bell className="h-3.5 w-3.5 text-sage" />}
               label="Erinnerung"

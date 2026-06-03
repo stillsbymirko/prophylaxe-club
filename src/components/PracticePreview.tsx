@@ -10,10 +10,11 @@ import type { PracticeData } from "@/lib/practice-data";
 import { useEffect, useRef, useState } from "react";
 
 export const PREVIEW_DEMO_PRACTICE: PracticeData = {
-  name: "Zahnärzte Ladeweg & Kollegen",
-  bookingUrl: "https://www.denspoint.de",
-  phone: "030 3917644",
-  slug: "denspoint",
+  name: "Praxis Müller",
+  bookingUrl: "https://www.praxis-mueller.de",
+  phone: "030 123 4567",
+  address: "Musterstr. 12, 12345 Musterstadt",
+  slug: "praxis-mueller",
 };
 
 interface PracticePreviewProps {
@@ -46,7 +47,8 @@ export function PracticePreview({
 
   const demoActive = isVisible && !demoPaused;
 
-  const { phase, pointer, tapActive, isRunning } = usePhoneScreenDemo({
+  const { phase, pointer, tapActive, isRunning, notificationTick } =
+    usePhoneScreenDemo({
     enabled: demoActive,
     paused: demoPaused,
     phoneRef: phoneWrapRef,
@@ -78,6 +80,7 @@ export function PracticePreview({
             practice={practice}
             phase={showDemo ? phase : null}
             tapActive={tapActive}
+            notificationTick={notificationTick}
             optionRef={optionRef}
             downloadButtonRef={downloadRef}
             confirmButtonRef={confirmRef}

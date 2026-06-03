@@ -18,6 +18,6 @@ export function operatorAddressLines(): string[] {
   return [name, street, `${zip} ${city}`, country];
 }
 
-export function siteUrlHint(slug = "denspoint"): string {
+export function siteUrlHint(slug = "praxis-mueller"): string {
   return `${siteConfig.domain}/${slug}`;
 }

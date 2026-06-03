@@ -104,6 +104,21 @@ body {
 .delay-4 { animation-delay: 0.32s; }
 .delay-5 { animation-delay: 0.4s; }
 
+@keyframes demo-notification-drop {
+  0% {
+    opacity: 0;
+    transform: translateY(-110%) scale(0.94);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.demo-notification-drop {
+  animation: demo-notification-drop 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 @keyframes demo-tap-ring {
   0% {
     width: 2.5rem;
@@ -207,6 +222,10 @@ body {
   }
 
   .demo-tap-ring {
+    animation: none;
+  }
+
+  .demo-notification-drop {
     animation: none;
   }
 

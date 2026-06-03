@@ -8,10 +8,11 @@ import { Check, Printer } from "lucide-react";
 import { LandingSection } from "./LandingSection";
 
 const examplePractice: PracticeData = {
-  name: "Zahnärzte am Park",
-  bookingUrl: "https://www.denspoint.de",
-  phone: "030 3917644",
-  slug: "denspoint",
+  name: "Praxis Müller",
+  bookingUrl: "https://www.praxis-mueller.de",
+  phone: "030 123 4567",
+  address: "Musterstr. 12, 12345 Musterstadt",
+  slug: "praxis-mueller",
 };
 
 const exampleFlyer = getDefaultFlyerSettings();

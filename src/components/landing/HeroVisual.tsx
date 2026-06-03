@@ -6,10 +6,11 @@ import type { PracticeData } from "@/lib/practice-data";
 import { CalendarCheck, QrCode } from "lucide-react";
 
 const heroPractice: PracticeData = {
-  name: "Zahnärzte am Park",
-  bookingUrl: "https://ihre-praxis.de",
+  name: "Praxis Müller",
+  bookingUrl: "https://www.praxis-mueller.de",
   phone: "030 123 4567",
-  slug: "ihre-praxis",
+  address: "Musterstr. 12, 12345 Musterstadt",
+  slug: "praxis-mueller",
 };
 
 export function HeroVisual() {

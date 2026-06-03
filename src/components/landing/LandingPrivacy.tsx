@@ -14,7 +14,7 @@ const stored = [
   "Praxisname",
   "Buchungs-URL Ihrer Praxis",
   "Telefonnummer der Praxis",
-  "Individueller Slug (z. B. „denspoint“)",
+  "Individueller Slug (z. B. „praxis-mueller“)",
 ];
 
 export function LandingPrivacy() {

@@ -7,7 +7,7 @@ Privacy-first, DSGVO-konforme Web-App für Zahnarztpraxen zur Erstellung von Kal
 - **Praxis-Dashboard** (`/`): Link-Generator mit Live-Vorschau und QR-Code
 - **Patienten-Landingpage** (`/[slug]`): Ein-Klick-Kalenderdownload (.ics)
 - **Keine Patientendaten**: Es werden ausschließlich Praxis-Stammdaten gespeichert (Name, URL, Telefon)
-- **Kurze URLs**: `prophylaxe.club/denspoint`
+- **Kurze URLs**: `prophylaxe.club/praxis-mueller`
 - **Smart Date Logic**: Automatische Berechnung der Buchungs-Quartale
 - **VALARM**: Push-Benachrichtigung auf iOS & Android
 
@@ -30,7 +30,7 @@ Ohne `.env.local` werden Praxisdaten lokal in `data/practices.json` gespeichert.
 3. **Upstash Redis** über den [Vercel Marketplace](https://vercel.com/marketplace/upstash) verbinden
 4. Deploy (oder Redeploy nach Integration)
 
-Upstash setzt `UPSTASH_REDIS_REST_URL` und `UPSTASH_REDIS_REST_TOKEN` automatisch. Praxisdaten werden dann in Redis gespeichert — kurze URLs wie `/denspoint` funktionieren dauerhaft.
+Upstash setzt `UPSTASH_REDIS_REST_URL` und `UPSTASH_REDIS_REST_TOKEN` automatisch. Praxisdaten werden dann in Redis gespeichert — kurze URLs wie `/praxis-mueller` funktionieren dauerhaft.
 
 ## Tech Stack
 

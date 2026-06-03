@@ -1,9 +1,10 @@
 {
-  "denspoint": {
-    "name": "Penis",
-    "bookingUrl": "https://deinebuchung.de",
-    "phone": "01737235155",
-    "slug": "denspoint",
+  "praxis-mueller": {
+    "name": "Praxis Müller",
+    "bookingUrl": "https://www.praxis-mueller.de",
+    "phone": "030 123 4567",
+    "address": "Musterstr. 12, 12345 Musterstadt",
+    "slug": "praxis-mueller",
     "editToken": "00000000-0000-4000-a000-000000000001"
   },
   "mirko-meister": {
@@ -12,5 +13,27 @@
     "phone": "0173 7235155",
     "slug": "mirko-meister",
     "editToken": "00000000-0000-4000-a000-000000000002"
+  },
+  "lietzenburgerstr-107": {
+    "name": "DoctorBox Service GmbH",
+    "bookingUrl": "https://doctorbox.de",
+    "phone": "+491737235155",
+    "slug": "lietzenburgerstr-107",
+    "flyer": {
+      "headline": "Nächste Prophylaxe nicht vergessen",
+      "subline": "Scannen Sie den QR-Code und legen Sie Ihre Erinnerung direkt in Ihren Kalender.",
+      "instruction": "Wählen Sie „In 6 Monaten\" oder „In 12 Monaten\" — ohne App, ohne Anmeldung.",
+      "privacyNote": "100 % anonym · Keine persönlichen Daten"
+    },
+    "editToken": "94edf849-6419-42c8-acd8-0b8a5e002d60",
+    "ownerEmail": "mirko.meister@doctorbox.eu"
+  },
+  "test": {
+    "name": "test",
+    "bookingUrl": "https://test.de",
+    "phone": "0173 7235155",
+    "slug": "test",
+    "editToken": "91bf1806-7168-426d-918f-7608353553a2",
+    "ownerEmail": "mirko.meister@icloud.com"
   }
 }

@@ -39,13 +39,21 @@ export function generateIcsFile(
 
   const summary = `🦷 Prophylaxe-Termin buchen (${practice.name})`;
   const pzrInfoUrl = getPzrSubsidyInfoUrl();
+  const addressLine = practice.address?.trim()
+    ? `Adresse: ${practice.address.trim()}\n\n`
+    : "";
   const description = escapeIcsText(
-    `Erinnerung: Die Termine für Ihr Prophylaxe-Quartal wurden freigeschaltet. ` +
+    addressLine +
+      `Erinnerung: Die Termine für Ihr Prophylaxe-Quartal wurden freigeschaltet. ` +
       `Jetzt direkt online buchen unter: ${practice.bookingUrl} ` +
       `oder telefonisch unter ${practice.phone}.\n\n` +
       `Tipp: Viele Krankenkassen bezuschussen die professionelle Zahnreinigung (PZR). ` +
       `Infos zu möglichen Zuschüssen: ${pzrInfoUrl}`,
   );
+
+  const locationLine =
+    practice.address?.trim() &&
+    `LOCATION:${escapeIcsText(practice.address.trim())}`;
 
   return [
     "BEGIN:VCALENDAR",
@@ -75,6 +83,7 @@ export function generateIcsFile(
     `DTEND;TZID=Europe/Berlin:${dtEnd}`,
     `SUMMARY:${escapeIcsText(summary)}`,
     `DESCRIPTION:${description}`,
+    ...(locationLine ? [locationLine] : []),
     "BEGIN:VALARM",
     "TRIGGER:PT0M",
     "ACTION:DISPLAY",

@@ -20,6 +20,7 @@ const defaultData: PracticeData = {
   name: "",
   bookingUrl: "",
   phone: "",
+  address: "",
   slug: "",
 };
 
@@ -69,6 +70,9 @@ export function DashboardPage() {
     if (!formData.phone.trim()) {
       nextErrors.phone = "Bitte geben Sie die Telefonnummer ein.";
     }
+    if (!formData.address?.trim()) {
+      nextErrors.address = "Bitte geben Sie die Praxisadresse ein.";
+    }
     if (!formData.slug.trim()) {
       nextErrors.slug = "Bitte wählen Sie eine Kurz-Adresse.";
     } else if (!/^[a-z0-9-]+$/.test(formData.slug.trim())) {
@@ -92,6 +96,7 @@ export function DashboardPage() {
       name: formData.name.trim(),
       bookingUrl: formData.bookingUrl.trim(),
       phone: formData.phone.trim(),
+      address: formData.address?.trim(),
       slug: formData.slug.trim(),
     };
 
@@ -173,7 +178,7 @@ export function DashboardPage() {
                   <Input
                     label="Praxisname"
                     name="name"
-                    placeholder="Zahnärzte Ladeweg & Kollegen"
+                    placeholder="Praxis Müller"
                     autoComplete="organization"
                     value={formData.name}
                     onFocus={pausePreviewDemo}
@@ -193,7 +198,7 @@ export function DashboardPage() {
                       name="bookingUrl"
                       type="url"
                       inputMode="url"
-                      placeholder="https://www.denspoint.de"
+                      placeholder="https://www.praxis-mueller.de"
                       autoComplete="url"
                       hint="Link zur Online-Terminbuchung — z. B. Doctolib, jameda oder die Buchungsseite Ihrer Praxis-Website. Patienten öffnen ihn direkt aus dem Kalendertermin."
                       value={formData.bookingUrl}
@@ -214,7 +219,7 @@ export function DashboardPage() {
                       name="phone"
                       type="tel"
                       inputMode="tel"
-                      placeholder="030 3917644"
+                      placeholder="030 123 4567"
                       autoComplete="tel"
                       value={formData.phone}
                       onFocus={pausePreviewDemo}
@@ -230,13 +235,31 @@ export function DashboardPage() {
 
                 <div>
                   <Input
+                    label="Praxisadresse"
+                    name="address"
+                    placeholder="Musterstr. 12, 12345 Musterstadt"
+                    autoComplete="street-address"
+                    hint="Straße, PLZ und Ort — erscheint direkt im Kalendertermin Ihrer Patienten."
+                    value={formData.address ?? ""}
+                    onFocus={pausePreviewDemo}
+                    onChange={(e) => updateField("address", e.target.value)}
+                  />
+                  {errors.address && (
+                    <p className="mt-1.5 text-xs text-red-700/80">
+                      {errors.address}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <Input
                     label="Kurz-Adresse Ihrer Praxis"
                     name="slug"
-                    placeholder="denspoint"
+                    placeholder="praxis-mueller"
                     hint={
                       formData.slug.trim()
                         ? `Ihr Patienten-Link und QR-Code: ${siteUrlHint(formData.slug.trim())}`
-                        : `Kurzer Name für Link & QR-Code — z. B. „denspoint" → ${siteUrlHint("denspoint")}`
+                        : `Kurzer Name für Link & QR-Code — z. B. „praxis-mueller" → ${siteUrlHint("praxis-mueller")}`
                     }
                     value={formData.slug}
                     onFocus={pausePreviewDemo}

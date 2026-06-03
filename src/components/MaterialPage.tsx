@@ -407,6 +407,22 @@ export function MaterialPage({
                   </div>
 
                   <Input
+                    label="Praxisadresse"
+                    name="address"
+                    placeholder="Musterstr. 12, 12345 Musterstadt"
+                    autoComplete="street-address"
+                    hint="Erscheint im Kalendertermin — Straße, PLZ und Ort."
+                    value={practice.address ?? ""}
+                    onChange={(e) => {
+                      setPractice((prev) => ({
+                        ...prev,
+                        address: e.target.value,
+                      }));
+                      setSaveMessage(null);
+                    }}
+                  />
+
+                  <Input
                     label="Überschrift"
                     name="headline"
                     value={flyer.headline}

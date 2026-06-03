@@ -66,6 +66,9 @@ export function CalendarSetupPage({ practice, months }: CalendarSetupPageProps) 
             Prophylaxe-Termin buchen
           </p>
           <p className="mt-1 text-sm text-ink-soft">{practice.name}</p>
+          {practice.address && (
+            <p className="mt-1 text-sm text-ink-soft">{practice.address}</p>
+          )}
           <p className="mt-3 text-sm font-medium text-ink">
             {formatGermanDate(reminder.date)} · 09:00 Uhr
           </p>

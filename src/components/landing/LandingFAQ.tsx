@@ -31,7 +31,7 @@ const faqs = [
   {
     question: "Kann jemand meinen Slug übernehmen?",
     answer:
-      'Nein. Ist ein Slug wie „denspoint" vergeben, kann nur der Inhaber des Bearbeitungs-Links die Daten ändern. Andere erhalten eine Fehlermeldung.',
+      'Nein. Ist ein Slug wie „praxis-mueller" vergeben, kann nur der Inhaber des Bearbeitungs-Links die Daten ändern. Andere erhalten eine Fehlermeldung.',
   },
   {
     question: "Brauche ich technisches Wissen?",
