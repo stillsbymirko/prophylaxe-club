@@ -3,6 +3,14 @@
     "name": "Penis",
     "bookingUrl": "https://deinebuchung.de",
     "phone": "01737235155",
-    "slug": "denspoint"
+    "slug": "denspoint",
+    "editToken": "00000000-0000-4000-a000-000000000001"
+  },
+  "mirko-meister": {
+    "name": "Mirko Meister",
+    "bookingUrl": "https://deinebuchung.de",
+    "phone": "0173 7235155",
+    "slug": "mirko-meister",
+    "editToken": "00000000-0000-4000-a000-000000000002"
   }
 }

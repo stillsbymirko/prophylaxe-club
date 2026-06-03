@@ -1,31 +1,116 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
+  --ink: #1a2421;
+  --ink-muted: #4f5c58;
+  --ink-soft: #72807b;
+  --porcelain: #f4f6f5;
+  --cream: #ffffff;
+  --surface: #ffffff;
+  --sage: #1a6fbd;
+  --sage-deep: #145696;
+  --sage-glow: rgba(26, 111, 189, 0.12);
+  --gold: #b8925f;
+  --gold-soft: #d4c4a8;
+  --mist: #e8ecea;
+  --border: rgba(26, 36, 33, 0.08);
+  --background: #ffffff;
+  --foreground: var(--ink);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-soft: var(--ink-soft);
+  --color-porcelain: var(--porcelain);
+  --color-cream: var(--cream);
+  --color-surface: var(--surface);
+  --color-sage: var(--sage);
+  --color-sage-deep: var(--sage-deep);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-mist: var(--mist);
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display-family);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), system-ui, sans-serif;
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+
+.font-display {
+  font-family: var(--font-display-family), Georgia, serif;
 }
 
 * {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* Subtle grain — disabled for clean clinical look */
+.grain::before {
+  display: none;
+}
+
+.ambient-glow {
+  background: var(--background);
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease both;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.delay-1 { animation-delay: 0.08s; }
+.delay-2 { animation-delay: 0.16s; }
+.delay-3 { animation-delay: 0.24s; }
+.delay-4 { animation-delay: 0.32s; }
+.delay-5 { animation-delay: 0.4s; }
+
+/* Legal pages */
 .legal-content h2 {
   margin-top: 2rem;
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: var(--foreground);
+  font-family: var(--font-display-family), Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--ink);
 }
 
 .legal-content h2:first-child {
@@ -36,40 +121,94 @@ body {
   margin-top: 1.25rem;
   font-size: 1rem;
   font-weight: 600;
-  color: var(--foreground);
+  color: var(--ink);
 }
 
 .legal-content p {
-  line-height: 1.625;
+  line-height: 1.7;
+  color: var(--ink-muted);
 }
 
 .legal-content ul {
   margin-top: 0.5rem;
   list-style-type: disc;
   padding-left: 1.5rem;
+  color: var(--ink-muted);
 }
 
 .legal-content li {
-  margin-top: 0.25rem;
-  line-height: 1.625;
+  margin-top: 0.35rem;
+  line-height: 1.65;
 }
 
 .legal-content a {
-  color: #0d9488;
+  color: var(--sage);
   text-decoration: underline;
-  text-underline-offset: 2px;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--gold-soft);
 }
 
 .legal-content a:hover {
-  color: #0f766e;
+  color: var(--sage-deep);
 }
 
 .legal-content strong {
   font-weight: 600;
-  color: var(--foreground);
+  color: var(--ink);
 }
 
 .legal-content .lead {
   font-size: 1.0625rem;
-  color: #475569;
+  color: var(--ink-muted);
+}
+
+.print-only {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up,
+  .animate-fade-in,
+  .animate-scale-in {
+    animation: none;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  html,
+  body {
+    background: white !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .grain::before {
+    display: none !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+    position: static !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
 }

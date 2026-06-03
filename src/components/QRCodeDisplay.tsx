@@ -1,11 +1,10 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
-import { Download, Copy, Check, Link2 } from "lucide-react";
-import { useState } from "react";
+import { Download, Copy, Check, QrCode } from "lucide-react";
 
 interface QRCodeDisplayProps {
   url: string;
@@ -35,7 +34,7 @@ export function QRCodeDisplay({ url }: QRCodeDisplayProps) {
 
     img.onload = () => {
       if (!ctx) return;
-      ctx.fillStyle = "#ffffff";
+      ctx.fillStyle = "#faf6ef";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(img, 0, 0, 512, 512);
 
@@ -51,46 +50,49 @@ export function QRCodeDisplay({ url }: QRCodeDisplayProps) {
   };
 
   return (
-    <Card className="overflow-hidden">
-      <CardHeader className="border-b border-slate-100 bg-gradient-to-br from-teal-50 to-white">
-        <div className="flex items-center gap-2">
-          <Link2 className="h-5 w-5 text-teal-600" />
-          <CardTitle>Ihr Patienten-Link</CardTitle>
+    <Card>
+      <CardHeader className="border-b border-[var(--border)] bg-gradient-to-br from-porcelain/80 to-surface">
+        <div className="flex items-center gap-3">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-sage/10">
+            <QrCode className="h-4 w-4 text-sage" />
+          </div>
+          <div>
+            <p className="text-xs font-medium tracking-widest text-gold uppercase">
+              Schritt 2
+            </p>
+            <CardTitle className="text-lg">Ihr Patienten-Link</CardTitle>
+          </div>
         </div>
       </CardHeader>
       <CardContent className="space-y-6 pt-6">
-        <div className="rounded-xl border border-slate-200 bg-slate-50 p-3">
-          <p className="break-all font-mono text-sm text-teal-800">{url}</p>
+        <div className="rounded-2xl border border-[var(--border)] bg-porcelain/40 px-4 py-3">
+          <p className="break-all font-mono text-sm text-sage">{url}</p>
         </div>
 
         <div className="flex flex-col items-center gap-4">
           <div
             ref={qrRef}
-            className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"
+            className="rounded-3xl border border-[var(--border)] bg-surface p-5 shadow-[inset_0_2px_8px_rgba(26,36,33,0.04)]"
           >
             <QRCodeSVG
               value={url}
               size={200}
               level="M"
               includeMargin={false}
-              bgColor="#ffffff"
-              fgColor="#0f172a"
+              bgColor="#fffcf7"
+              fgColor="#1a2421"
             />
           </div>
-          <p className="text-center text-sm text-slate-500">
-            QR-Code zum Ausdrucken oder Teilen in der Praxis
+          <p className="max-w-xs text-center text-sm leading-relaxed text-ink-soft">
+            Zum Ausdrucken im Wartezimmer oder Teilen in der Praxis
           </p>
         </div>
 
-        <div className="flex flex-col gap-2 sm:flex-row">
-          <Button
-            variant="outline"
-            className="flex-1"
-            onClick={handleCopy}
-          >
+        <div className="flex flex-col gap-2.5 sm:flex-row">
+          <Button variant="outline" className="flex-1" onClick={handleCopy}>
             {copied ? (
               <>
-                <Check className="h-4 w-4" />
+                <Check className="h-4 w-4 text-sage" />
                 Kopiert!
               </>
             ) : (
@@ -100,7 +102,7 @@ export function QRCodeDisplay({ url }: QRCodeDisplayProps) {
               </>
             )}
           </Button>
-          <Button className="flex-1" onClick={handleDownload}>
+          <Button variant="gold" className="flex-1" onClick={handleDownload}>
             <Download className="h-4 w-4" />
             QR-Code speichern
           </Button>

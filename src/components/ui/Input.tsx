@@ -11,10 +11,10 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     const inputId = id ?? props.name;
 
     return (
-      <div className="space-y-1.5">
+      <div className="space-y-2">
         <label
           htmlFor={inputId}
-          className="block text-sm font-medium text-slate-700"
+          className="block text-sm font-medium tracking-wide text-ink-muted"
         >
           {label}
         </label>
@@ -22,12 +22,12 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           id={inputId}
           className={cn(
-            "flex h-11 w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-sm text-slate-900 shadow-sm transition-colors placeholder:text-slate-400 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/20",
+            "flex h-12 w-full rounded-2xl border border-[var(--border)] bg-surface px-4 py-2 text-sm text-ink shadow-[inset_0_1px_2px_rgba(26,36,33,0.04)] transition-all placeholder:text-ink-soft/60 focus:border-sage/40 focus:outline-none focus:ring-3 focus:ring-sage/10",
             className,
           )}
           {...props}
         />
-        {hint && <p className="text-xs text-slate-500">{hint}</p>}
+        {hint && <p className="text-xs leading-relaxed text-ink-soft">{hint}</p>}
       </div>
     );
   },

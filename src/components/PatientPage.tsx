@@ -1,7 +1,7 @@
 "use client";
 
 import { Footer } from "@/components/Footer";
-import { Card, CardContent } from "@/components/ui/Card";
+import { PageShell, SiteHeader } from "@/components/PageShell";
 import {
   formatGermanDate,
   getFullYearReminder,
@@ -9,7 +9,7 @@ import {
 } from "@/lib/date-logic";
 import { downloadIcsFile } from "@/lib/ics-generator";
 import type { PracticeData } from "@/lib/practice-data";
-import { CalendarDays, Clock, Download } from "lucide-react";
+import { CalendarDays, Clock, Download, Sparkles } from "lucide-react";
 
 interface PatientPageProps {
   practice: PracticeData;
@@ -20,104 +20,104 @@ export function PatientPage({ practice }: PatientPageProps) {
   const fullYear = getFullYearReminder();
 
   return (
-    <div className="flex min-h-full flex-col">
-      <header className="border-b border-slate-200/80 bg-white">
-        <div className="mx-auto flex max-w-lg items-center gap-3 px-4 py-6 sm:px-6">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-teal-100 text-teal-700">
-            <span className="text-2xl" aria-hidden>
-              🦷
-            </span>
-          </div>
-          <div>
-            <h1 className="text-lg font-semibold leading-tight text-slate-900 sm:text-xl">
-              {practice.name}
-            </h1>
-            <p className="text-sm text-slate-500">Prophylaxe-Erinnerung</p>
-          </div>
-        </div>
-      </header>
+    <PageShell>
+      <SiteHeader
+        practiceName={practice.name}
+        subtitle="Prophylaxe-Erinnerung"
+        compact
+      />
 
-      <main className="mx-auto w-full max-w-lg flex-1 px-4 py-8 sm:px-6 sm:py-10">
-        <div className="mb-8 text-center">
-          <h2 className="text-xl font-semibold text-slate-900 sm:text-2xl">
-            Wann möchten Sie an Ihre nächste Prophylaxe erinnert werden?
+      <main className="mx-auto w-full max-w-lg flex-1 px-5 py-8 sm:px-8 sm:py-12">
+        <div className="animate-fade-up mb-10 text-center">
+          <div className="mx-auto mb-4 flex h-10 w-10 items-center justify-center rounded-full border border-gold-soft/50 bg-porcelain">
+            <Sparkles className="h-4 w-4 text-gold" />
+          </div>
+          <h2 className="font-display text-2xl leading-tight tracking-tight text-ink sm:text-3xl">
+            Wann möchten Sie erinnert werden?
           </h2>
-          <p className="mt-2 text-sm text-slate-500">
-            Tippen Sie auf eine Option — Ihr Kalendertermin wird sofort
-            heruntergeladen. Keine Anmeldung, keine persönlichen Daten.
+          <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-ink-soft">
+            Ein Tipp genügt — Ihr Kalendertermin wird sofort heruntergeladen.
+            Keine Anmeldung, keine persönlichen Daten.
           </p>
         </div>
 
-        <div className="space-y-4">
+        <div className="animate-fade-up delay-2 space-y-4">
           <ReminderCard
-            title="In einem halben Jahr erinnern"
+            index={0}
+            title="In einem halben Jahr"
+            subtitle="Erinnerung in 6 Monaten"
             reminder={halfYear}
             onSelect={() => downloadIcsFile(practice, halfYear.date)}
           />
           <ReminderCard
-            title="Im nächsten Jahr erinnern"
+            index={1}
+            title="Im nächsten Jahr"
+            subtitle="Erinnerung in 12 Monaten"
             reminder={fullYear}
             onSelect={() => downloadIcsFile(practice, fullYear.date)}
           />
         </div>
 
-        <p className="mt-8 flex items-center justify-center gap-2 text-center text-xs text-slate-400">
-          <Download className="h-3.5 w-3.5" />
-          Die .ics-Datei öffnet sich in Ihrem Kalender mit Erinnerungsalarm
+        <p className="animate-fade-in delay-4 mt-10 flex items-center justify-center gap-2 text-center text-xs text-ink-soft">
+          <Download className="h-3.5 w-3.5 text-gold" />
+          Mit Erinnerungsalarm für iPhone &amp; Android
         </p>
       </main>
 
       <Footer />
-    </div>
+    </PageShell>
   );
 }
 
 function ReminderCard({
+  index,
   title,
+  subtitle,
   reminder,
   onSelect,
 }: {
+  index: number;
   title: string;
+  subtitle: string;
   reminder: ReturnType<typeof getHalfYearReminder>;
   onSelect: () => void;
 }) {
   return (
-    <Card className="group overflow-hidden transition-shadow hover:shadow-md">
-      <CardContent className="p-0">
-        <button
-          type="button"
-          onClick={onSelect}
-          className="flex w-full flex-col items-start gap-4 p-5 text-left transition-colors hover:bg-teal-50/50 active:bg-teal-50 sm:p-6"
-        >
-          <div className="flex w-full items-start justify-between gap-3">
-            <div>
-              <p className="text-base font-semibold text-slate-900 sm:text-lg">
-                {title}
-              </p>
-              <p className="mt-1 text-sm text-slate-500">{reminder.label}</p>
-            </div>
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-teal-100 text-teal-700 transition-colors group-hover:bg-teal-600 group-hover:text-white">
-              <CalendarDays className="h-5 w-5" />
-            </div>
-          </div>
+    <button
+      type="button"
+      onClick={onSelect}
+      className="group relative w-full overflow-hidden rounded-3xl border border-[var(--border)] bg-surface p-5 text-left shadow-[0_8px_32px_rgba(26,36,33,0.06)] transition-all duration-300 hover:border-sage/20 hover:shadow-[0_16px_48px_rgba(26,111,189,0.12)] active:scale-[0.99] sm:p-6"
+      style={{ animationDelay: `${0.1 + index * 0.08}s` }}
+    >
+      {/* Gold accent bar */}
+      <div className="absolute top-0 left-0 h-full w-1 bg-gradient-to-b from-gold via-gold-soft to-transparent opacity-80 transition-opacity group-hover:opacity-100" />
 
-          <div className="flex w-full items-center gap-2 rounded-xl bg-slate-50 px-3 py-2.5 text-sm text-slate-600">
-            <Clock className="h-4 w-4 shrink-0 text-teal-600" />
-            <span>
-              Erinnerung am{" "}
-              <strong className="font-medium text-slate-800">
-                {formatGermanDate(reminder.date)}
-              </strong>{" "}
-              um 09:00 Uhr
-            </span>
-          </div>
+      <div className="flex items-start justify-between gap-4 pl-3">
+        <div className="flex-1">
+          <p className="text-xs font-medium tracking-widest text-gold uppercase">
+            {subtitle}
+          </p>
+          <p className="font-display mt-1 text-xl text-ink sm:text-2xl">
+            {title}
+          </p>
+          <p className="mt-1 text-sm text-ink-soft">{reminder.label}</p>
+        </div>
+        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-porcelain text-sage transition-all duration-300 group-hover:bg-sage group-hover:text-cream group-hover:shadow-[0_4px_16px_var(--sage-glow)]">
+          <CalendarDays className="h-5 w-5" />
+        </div>
+      </div>
 
-          <span className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-teal-600 px-4 py-3 text-sm font-medium text-white transition-colors group-hover:bg-teal-700 sm:hidden">
-            <Download className="h-4 w-4" />
-            Kalendertermin herunterladen
-          </span>
-        </button>
-      </CardContent>
-    </Card>
+      <div className="mt-5 flex items-center gap-2.5 rounded-2xl bg-porcelain/70 px-4 py-3 pl-3 text-sm text-ink-muted">
+        <Clock className="h-4 w-4 shrink-0 text-sage" />
+        <span>
+          {formatGermanDate(reminder.date)} · 09:00 Uhr
+        </span>
+      </div>
+
+      <div className="mt-4 flex items-center justify-center gap-2 rounded-2xl bg-sage py-3.5 text-sm font-medium text-cream transition-all duration-300 group-hover:bg-sage-deep">
+        <Download className="h-4 w-4" />
+        Kalendertermin herunterladen
+      </div>
+    </button>
   );
 }
