@@ -14,6 +14,7 @@ const stored = [
   "Praxisname",
   "Buchungs-URL Ihrer Praxis",
   "Telefonnummer der Praxis",
+  "Praxisadresse (für den Kalendertermin)",
   "Individueller Slug (z. B. „praxis-mueller“)",
 ];
 

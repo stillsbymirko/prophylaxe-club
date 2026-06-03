@@ -19,6 +19,7 @@ import {
 } from "@/lib/practice-data";
 import {
   ArrowLeft,
+  Building2,
   Check,
   Download,
   ImagePlus,
@@ -137,13 +138,51 @@ export function MaterialPage({
     });
   };
 
+  const updatePractice = (field: keyof PracticeData, value: string) => {
+    setPractice((prev) => ({ ...prev, [field]: value }));
+    setSaveMessage(null);
+  };
+
+  const validatePractice = (): string | null => {
+    if (!practice.name.trim()) {
+      return "Bitte geben Sie den Praxisnamen ein.";
+    }
+    if (!practice.bookingUrl.trim()) {
+      return "Bitte geben Sie die Buchungs-URL ein.";
+    }
+    if (!/^https?:\/\/.+/.test(practice.bookingUrl.trim())) {
+      return "Bitte geben Sie eine gültige Buchungs-URL ein (https://…).";
+    }
+    if (!practice.phone.trim()) {
+      return "Bitte geben Sie die Telefonnummer ein.";
+    }
+    if (!practice.address?.trim()) {
+      return "Bitte geben Sie die Praxisadresse ein.";
+    }
+    return null;
+  };
+
   const saveAll = useCallback(async () => {
+    const validationError = validatePractice();
+    if (validationError) {
+      setSaveMessage(validationError);
+      return;
+    }
+
     setIsSaving(true);
     setSaveMessage(null);
 
+    const trimmed: PracticeData = {
+      ...practice,
+      name: practice.name.trim(),
+      bookingUrl: practice.bookingUrl.trim(),
+      phone: practice.phone.trim(),
+      address: practice.address?.trim(),
+    };
+
     try {
       const payload = {
-        ...practice,
+        ...trimmed,
         flyer,
         editToken,
       };
@@ -160,7 +199,7 @@ export function MaterialPage({
         return;
       }
 
-      setPractice(payload);
+      setPractice(trimmed);
       setSaveMessage("Gespeichert!");
       setTimeout(() => setSaveMessage(null), 3000);
     } catch {
@@ -217,8 +256,8 @@ export function MaterialPage({
               Ihr Druckmaterial
             </h1>
             <p className="mt-3 text-ink-muted">
-              Laden Sie QR-Code und Flyer herunter — oder passen Sie den
-              A4-Flyer mit Ihrem Logo und Text an.
+              Passen Sie Ihre Praxisdaten an, laden Sie QR-Code und Flyer
+              herunter — oder gestalten Sie den A4-Flyer mit Logo und Text.
             </p>
             <div className="mt-4 flex flex-wrap gap-3">
               <a
@@ -321,6 +360,72 @@ export function MaterialPage({
           <div className="grid gap-10 lg:grid-cols-2">
             {/* Left: QR + Editor */}
             <div className="animate-fade-up delay-2 space-y-8">
+              {/* Practice data */}
+              <section className="rounded-3xl border border-[var(--border)] bg-surface p-6 sm:p-8">
+                <div className="mb-6 flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sage/10">
+                    <Building2 className="h-5 w-5 text-sage" />
+                  </div>
+                  <div>
+                    <h2 className="font-display text-xl text-ink">Praxisdaten</h2>
+                    <p className="text-sm text-ink-soft">
+                      Erscheinen in Kalendertermin und Patienten-Ansicht
+                    </p>
+                  </div>
+                </div>
+
+                <div className="space-y-5">
+                  <Input
+                    label="Praxisname"
+                    name="name"
+                    autoComplete="organization"
+                    value={practice.name}
+                    onChange={(e) => updatePractice("name", e.target.value)}
+                  />
+                  <Input
+                    label="Buchungs-URL"
+                    name="bookingUrl"
+                    type="url"
+                    inputMode="url"
+                    autoComplete="url"
+                    hint="Link zur Online-Terminbuchung — Patienten öffnen ihn aus dem Kalendertermin."
+                    value={practice.bookingUrl}
+                    onChange={(e) =>
+                      updatePractice("bookingUrl", e.target.value)
+                    }
+                  />
+                  <Input
+                    label="Telefonnummer"
+                    name="phone"
+                    type="tel"
+                    inputMode="tel"
+                    autoComplete="tel"
+                    value={practice.phone}
+                    onChange={(e) => updatePractice("phone", e.target.value)}
+                  />
+                  <Input
+                    label="Praxisadresse"
+                    name="address"
+                    placeholder="Musterstr. 12, 12345 Musterstadt"
+                    autoComplete="street-address"
+                    hint="Straße, PLZ und Ort — erscheint als Ort im Kalendertermin."
+                    value={practice.address ?? ""}
+                    onChange={(e) => updatePractice("address", e.target.value)}
+                  />
+                  <div className="rounded-2xl bg-porcelain/60 px-4 py-3">
+                    <p className="text-sm font-medium text-ink-muted">
+                      Patienten-Link
+                    </p>
+                    <p className="mt-1 font-mono text-sm text-sage">
+                      {patientUrl.replace(/^https?:\/\//, "")}
+                    </p>
+                    <p className="mt-1 text-xs text-ink-soft">
+                      Der Kurzname kann nachträglich nicht geändert werden.
+                    </p>
+                  </div>
+                </div>
+              </section>
+
               {/* QR Section */}
               <section className="rounded-3xl border border-[var(--border)] bg-surface p-6 sm:p-8">
                 <div className="mb-6 flex items-center gap-3">
@@ -407,22 +512,6 @@ export function MaterialPage({
                   </div>
 
                   <Input
-                    label="Praxisadresse"
-                    name="address"
-                    placeholder="Musterstr. 12, 12345 Musterstadt"
-                    autoComplete="street-address"
-                    hint="Erscheint im Kalendertermin — Straße, PLZ und Ort."
-                    value={practice.address ?? ""}
-                    onChange={(e) => {
-                      setPractice((prev) => ({
-                        ...prev,
-                        address: e.target.value,
-                      }));
-                      setSaveMessage(null);
-                    }}
-                  />
-
-                  <Input
                     label="Überschrift"
                     name="headline"
                     value={flyer.headline}
@@ -462,7 +551,7 @@ export function MaterialPage({
                       ) : (
                         <Save className="h-4 w-4" />
                       )}
-                      {isSaving ? "Speichert…" : "Flyer speichern"}
+                      {isSaving ? "Speichert…" : "Änderungen speichern"}
                     </Button>
                     {saveMessage && (
                       <span
