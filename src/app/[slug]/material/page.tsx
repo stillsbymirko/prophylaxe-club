@@ -3,6 +3,7 @@ import { Footer } from "@/components/Footer";
 import { PageShell } from "@/components/PageShell";
 import { verifyEditToken, toPublicPractice } from "@/lib/practice-auth";
 import { getStoredPracticeBySlug } from "@/lib/practices-store";
+import { getServerOrigin } from "@/lib/request-origin";
 import { AlertCircle, Lock } from "lucide-react";
 import Link from "next/link";
 import type { Metadata } from "next";
@@ -81,6 +82,7 @@ export default async function MaterialRoutePage({
       practice={toPublicPractice(stored)}
       editToken={token!}
       ownerEmail={stored.ownerEmail}
+      siteOrigin={await getServerOrigin()}
     />
   );
 }

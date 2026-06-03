@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { exportElementAsPng, exportQrSvgAsPng } from "@/lib/export-image";
 import {
+  buildMaterialUrl,
   buildPatientUrl,
   readFileAsBase64,
   resolveFlyerSettings,
@@ -37,12 +38,14 @@ interface MaterialPageProps {
   practice: PracticeData;
   editToken: string;
   ownerEmail?: string;
+  siteOrigin: string;
 }
 
 export function MaterialPage({
   practice: initialPractice,
   editToken,
   ownerEmail: initialOwnerEmail,
+  siteOrigin,
 }: MaterialPageProps) {
   const [practice, setPractice] = useState<PracticeData>(initialPractice);
   const [flyer, setFlyer] = useState<FlyerSettings>(
@@ -60,15 +63,8 @@ export function MaterialPage({
   const qrRef = useRef<HTMLDivElement>(null);
   const flyerRef = useRef<HTMLDivElement>(null);
 
-  const origin =
-    typeof window !== "undefined" ? window.location.origin : "";
-  const patientUrl = origin
-    ? buildPatientUrl(origin, practice)
-    : `https://prophylaxeerinnerung.de/${practice.slug}`;
-
-  const editUrl = origin
-    ? `${origin}/${practice.slug}/material?token=${encodeURIComponent(editToken)}`
-    : "";
+  const patientUrl = buildPatientUrl(siteOrigin, practice);
+  const editUrl = buildMaterialUrl(siteOrigin, practice.slug, editToken);
 
   const copyEditLink = async () => {
     if (!editUrl) return;

@@ -5,6 +5,7 @@ import {
 import type { StoredPractice } from "@/lib/practice-auth";
 import {
   getStoredPracticeBySlug,
+  PracticeStorageError,
   savePractice,
 } from "@/lib/practices-store";
 import {
@@ -15,11 +16,8 @@ import {
   type FlyerSettings,
   type PracticeData,
 } from "@/lib/practice-data";
-import {
-  getRequestOrigin,
-  isValidEmail,
-  sendEditLinkEmail,
-} from "@/lib/email";
+import { isValidEmail, sendEditLinkEmail } from "@/lib/email";
+import { getRequestOrigin } from "@/lib/request-origin";
 import { NextResponse } from "next/server";
 
 function parseFlyer(raw: unknown): FlyerSettings | undefined {
@@ -209,6 +207,13 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     console.error("savePractice failed:", error);
+
+    if (error instanceof PracticeStorageError) {
+      const status =
+        error.code === "redis_not_configured" ? 503 : 500;
+      return NextResponse.json({ error: error.message }, { status });
+    }
+
     return NextResponse.json(
       { error: "Speichern fehlgeschlagen. Bitte erneut versuchen." },
       { status: 500 },

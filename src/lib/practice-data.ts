@@ -18,9 +18,9 @@ export function getDefaultFlyerSettings(): FlyerSettings {
   return {
     headline: "Nächste Prophylaxe nicht vergessen",
     subline:
-      "Scannen Sie den QR-Code und legen Sie Ihre Erinnerung direkt in Ihren Kalender.",
+      "Ihre Erinnerung für die nächste Prophylaxe — in Sekunden im Kalender.",
     instruction:
-      'Wählen Sie „In 6 Monaten" oder „In 12 Monaten" — ohne App, ohne Anmeldung.',
+      "Ohne App · Ohne Anmeldung · In wenigen Sekunden erledigt",
     privacyNote: "100 % anonym · Keine persönlichen Daten",
   };
 }

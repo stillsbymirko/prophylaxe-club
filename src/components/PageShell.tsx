@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { LogoBadge } from "@/components/Logo";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { useState, type ReactNode } from "react";
@@ -30,29 +31,6 @@ const homeNavLinks = [
   { href: "#faq", label: "FAQ" },
 ];
 
-function LogoTooth({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      className={className}
-      aria-hidden
-    >
-      <path
-        d="M12 2.25c-3.15 0-5.75 2.45-5.75 5.65 0 2.05.85 3.55 1.55 5.15.55 1.25 1.05 2.45 1.05 4.05 0 1.35-.45 2.75-.95 4.05-.25.7.35 1.35 1.1 1.35h5.1c.75 0 1.35-.65 1.1-1.35-.5-1.3-.95-2.7-.95-4.05 0-1.6.5-2.8 1.05-4.05.7-1.6 1.55-3.1 1.55-5.15 0-3.2-2.6-5.65-5.75-5.65Z"
-        fill="currentColor"
-      />
-      <path
-        d="M9.75 7.5c.55-.85 1.35-1.35 2.25-1.35s1.7.5 2.25 1.35"
-        stroke="currentColor"
-        strokeWidth="1.25"
-        strokeLinecap="round"
-        opacity="0.35"
-      />
-    </svg>
-  );
-}
-
 export function SiteHeader({
   subtitle = "Prophylaxe-Erinnerung",
   compact = false,
@@ -71,10 +49,7 @@ export function SiteHeader({
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <div className="flex items-center gap-4">
           <Link href="/" className="group flex min-w-0 flex-1 items-center gap-3">
-            <div className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-sage shadow-[0_2px_12px_var(--sage-glow)] transition-transform duration-300 group-hover:scale-[1.03] sm:h-11 sm:w-11 sm:rounded-2xl">
-              <div className="absolute inset-0 bg-gradient-to-br from-white/15 to-transparent" />
-              <LogoTooth className="relative h-5 w-5 text-white sm:h-[1.35rem] sm:w-[1.35rem]" />
-            </div>
+            <LogoBadge className="transition-transform duration-300 group-hover:scale-[1.03]" />
             <div className="min-w-0">
               <p className="truncate font-display text-base leading-tight tracking-tight text-ink sm:text-xl">
                 {practiceName ?? "Prophylaxe-Erinnerung"}

@@ -58,6 +58,14 @@ export default function DatenschutzPage() {
         <li>Buchungs-URL</li>
         <li>Telefonnummer der Praxis</li>
         <li>Individueller Slug (z.&nbsp;B. „denspoint“)</li>
+        <li>
+          Optional: E-Mail-Adresse der Praxis (nur wenn beim Erstellen angegeben
+          — zum Versand des Bearbeitungs-Links)
+        </li>
+        <li>
+          Geheimer Bearbeitungs-Token (technischer Zugangsschlüssel, kein
+          Patientenbezug)
+        </li>
       </ul>
       <p>
         <strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO
@@ -77,7 +85,38 @@ export default function DatenschutzPage() {
         abgelegt werden.
       </p>
 
-      <h3>3.2 Server-Logfiles (Hosting)</h3>
+      <h3>3.2 E-Mail-Versand (optional)</h3>
+      <p>
+        Wenn eine Zahnarztpraxis optional eine E-Mail-Adresse angibt, kann der
+        persönliche Bearbeitungs-Link per E-Mail zugesandt werden. Dabei
+        verarbeiten wir:
+      </p>
+      <ul>
+        <li>E-Mail-Adresse der Praxis (Empfänger)</li>
+        <li>Praxisname (in Betreff und Inhalt der E-Mail)</li>
+        <li>Patienten-Link und Bearbeitungs-Link (URLs in der E-Mail)</li>
+      </ul>
+      <p>
+        Der Versand erfolgt über den Dienst{" "}
+        <strong>Resend, Inc.</strong> (Auftragsverarbeiter). Resend verarbeitet
+        die genannten Daten ausschließlich zum Versand der E-Mail und speichert
+        sie gemäß den Angaben des Anbieters für einen begrenzten Zeitraum in
+        Protokolldaten.
+      </p>
+      <p>
+        <strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO
+        (Durchführung des gewünschten Dienstes) und Art. 6 Abs. 1 lit. f DSGVO
+        (berechtigtes Interesse an zuverlässiger Zustellung des
+        Bearbeitungs-Links).
+      </p>
+      <p>
+        <strong>Speicherdauer:</strong> Die E-Mail-Adresse wird zusammen mit den
+        Praxis-Stammdaten in unserer Datenbank gespeichert, solange der Eintrag
+        besteht. Sie kann jederzeit gelöscht oder geändert werden (siehe
+        Abschnitt 8).
+      </p>
+
+      <h3>3.3 Server-Logfiles (Hosting)</h3>
       <p>
         Beim Aufruf unserer Website werden durch den Hosting-Anbieter
         automatisch technische Informationen erfasst (Server-Logfiles):
@@ -150,9 +189,32 @@ export default function DatenschutzPage() {
           upstash.com/trust/privacy
         </a>
       </p>
+
+      <h3>Resend, Inc.</h3>
       <p>
-        Mit beiden Anbietern wurden bzw. werden Auftragsverarbeitungsverträge
-        (AVV) abgeschlossen.
+        Versand des optionalen Bearbeitungs-Links per E-Mail an Zahnarztpraxen.
+        <br />
+        Website:{" "}
+        <a
+          href="https://resend.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          resend.com
+        </a>
+        <br />
+        Datenschutz:{" "}
+        <a
+          href="https://resend.com/legal/privacy-policy"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          resend.com/legal/privacy-policy
+        </a>
+      </p>
+      <p>
+        Mit allen genannten Anbietern wurden bzw. werden
+        Auftragsverarbeitungsverträge (AVV) abgeschlossen.
       </p>
 
       <h2>5. Cookies &amp; Tracking</h2>
@@ -169,7 +231,7 @@ export default function DatenschutzPage() {
 
       <h2>6. Datenübermittlung in Drittländer</h2>
       <p>
-        Vercel und Upstash können Daten in den USA verarbeiten. Die
+        Vercel, Upstash und Resend können Daten in den USA verarbeiten. Die
         Übermittlung erfolgt auf Grundlage von Angemessenheitsbeschlüssen
         (EU-US Data Privacy Framework) und/oder Standardvertragsklauseln der
         EU-Kommission gemäß Art. 46 DSGVO.

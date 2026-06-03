@@ -136,10 +136,11 @@ export function DashboardPage() {
 
       <main className="mx-auto w-full max-w-6xl flex-1 px-5 pb-28 pt-10 sm:px-8 sm:pb-14 sm:pt-12">
         <div className="animate-fade-up mb-8 lg:hidden">
-          <p className="mb-3 text-xs font-medium tracking-widest text-gold uppercase">
-            Live-Vorschau · aktualisiert sich beim Tippen
-          </p>
           <PracticePreview data={formData} />
+          <p className="mt-3 flex items-center justify-center gap-1 text-xs text-ink-soft">
+            <ChevronDown className="h-3.5 w-3.5 animate-bounce" />
+            Aktualisiert sich beim Tippen
+          </p>
         </div>
 
         {/* Form + Preview */}

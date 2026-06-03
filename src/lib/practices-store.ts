@@ -15,11 +15,37 @@ function practiceKey(slug: string): string {
   return `practice:${slug}`;
 }
 
+export type PracticeStorageErrorCode =
+  | "redis_not_configured"
+  | "redis_error"
+  | "file_write_error";
+
+export class PracticeStorageError extends Error {
+  readonly code: PracticeStorageErrorCode;
+
+  constructor(message: string, code: PracticeStorageErrorCode) {
+    super(message);
+    this.name = "PracticeStorageError";
+    this.code = code;
+  }
+}
+
 function isRedisConfigured(): boolean {
   return Boolean(
     (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) ||
       (process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN),
   );
+}
+
+function assertStorageAvailable(): void {
+  if (isRedisConfigured()) return;
+
+  if (process.env.VERCEL === "1") {
+    throw new PracticeStorageError(
+      "Speicher nicht eingerichtet: Bitte Upstash Redis im Vercel-Dashboard verbinden (Marketplace → Upstash → Redis) und neu deployen.",
+      "redis_not_configured",
+    );
+  }
 }
 
 function getRedis(): Redis {
@@ -69,8 +95,16 @@ async function getFromRedis(slug: string): Promise<StoredPractice | null> {
 }
 
 async function saveToRedis(data: StoredPractice): Promise<void> {
-  const redis = getRedis();
-  await redis.set(practiceKey(data.slug), data);
+  try {
+    const redis = getRedis();
+    await redis.set(practiceKey(data.slug), data);
+  } catch (error) {
+    console.error("Redis save failed:", error);
+    throw new PracticeStorageError(
+      "Speichern in Redis fehlgeschlagen. Bitte UPSTASH_REDIS_REST_URL und UPSTASH_REDIS_REST_TOKEN in Vercel prüfen.",
+      "redis_error",
+    );
+  }
 }
 
 async function deleteFromRedis(slug: string): Promise<void> {
@@ -102,14 +136,24 @@ export async function getPublicPracticeBySlug(
 }
 
 export async function savePractice(data: StoredPractice): Promise<void> {
+  assertStorageAvailable();
+
   if (isRedisConfigured()) {
     await saveToRedis(data);
     return;
   }
 
-  const store = await readFileStore();
-  store[data.slug] = data;
-  await writeFileStore(store);
+  try {
+    const store = await readFileStore();
+    store[data.slug] = data;
+    await writeFileStore(store);
+  } catch (error) {
+    console.error("File store save failed:", error);
+    throw new PracticeStorageError(
+      "Speichern fehlgeschlagen. Bitte erneut versuchen.",
+      "file_write_error",
+    );
+  }
 }
 
 export async function deletePracticeBySlug(slug: string): Promise<void> {

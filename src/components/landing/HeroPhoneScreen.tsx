@@ -4,21 +4,11 @@ import {
   getHalfYearReminder,
 } from "@/lib/date-logic";
 import type { PracticeData } from "@/lib/practice-data";
+import { LogoMark } from "@/components/Logo";
 import { CalendarDays, Download, Signal, Wifi } from "lucide-react";
 
 interface HeroPhoneScreenProps {
   practice: PracticeData;
-}
-
-function LogoToothMini({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
-      <path
-        d="M12 2.25c-3.15 0-5.75 2.45-5.75 5.65 0 2.05.85 3.55 1.55 5.15.55 1.25 1.05 2.45 1.05 4.05 0 1.35-.45 2.75-.95 4.05-.25.7.35 1.35 1.1 1.35h5.1c.75 0 1.35-.65 1.1-1.35-.5-1.3-.95-2.7-.95-4.05 0-1.6.5-2.8 1.05-4.05.7-1.6 1.55-3.1 1.55-5.15 0-3.2-2.6-5.65-5.75-5.65Z"
-        fill="currentColor"
-      />
-    </svg>
-  );
 }
 
 export function HeroPhoneScreen({ practice }: HeroPhoneScreenProps) {
@@ -43,7 +33,7 @@ export function HeroPhoneScreen({ practice }: HeroPhoneScreenProps) {
       {/* App header */}
       <div className="flex items-center gap-2.5 border-b border-[var(--border)] px-4 py-2.5">
         <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-sage">
-          <LogoToothMini className="h-3.5 w-3.5 text-white" />
+          <LogoMark className="h-3.5 w-3.5 text-white" />
         </div>
         <div className="min-w-0">
           <p className="truncate text-[11px] font-semibold leading-tight">

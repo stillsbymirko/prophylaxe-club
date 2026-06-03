@@ -4,11 +4,8 @@ import {
   buildMaterialUrl,
   buildPatientUrl,
 } from "@/lib/practice-data";
-import {
-  getRequestOrigin,
-  isValidEmail,
-  sendEditLinkEmail,
-} from "@/lib/email";
+import { isValidEmail, sendEditLinkEmail } from "@/lib/email";
+import { getRequestOrigin } from "@/lib/request-origin";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
