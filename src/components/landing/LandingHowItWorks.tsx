@@ -22,7 +22,7 @@ const steps = [
     step: "03",
     title: "Patient tippt — fertig",
     description:
-      "Patient scannt, wählt „in 6 Monaten“ oder „in 12 Monaten“ und lädt den Kalendertermin mit Erinnerungsalarm herunter.",
+      "Patient scannt, wählt „in 3, 6 oder 12 Monaten“ und lädt den Kalendertermin mit Erinnerungsalarm herunter.",
   },
 ];
 

@@ -5,9 +5,8 @@ import { PageShell, SiteHeader } from "@/components/PageShell";
 import { Button } from "@/components/ui/Button";
 import {
   formatGermanDate,
-  getFullYearReminder,
-  getHalfYearReminder,
-  type ReminderInfo,
+  getReminderForMonths,
+  type ReminderMonths,
 } from "@/lib/date-logic";
 import { downloadIcsFile } from "@/lib/ics-generator";
 import type { PracticeData } from "@/lib/practice-data";
@@ -16,7 +15,7 @@ import Link from "next/link";
 
 interface CalendarSetupPageProps {
   practice: PracticeData;
-  months: 6 | 12;
+  months: ReminderMonths;
 }
 
 const iphoneSteps = [
@@ -33,12 +32,8 @@ const androidSteps = [
   "Fertig — der Termin ist in Ihrem Kalender hinterlegt.",
 ] as const;
 
-function getReminder(months: 6 | 12): ReminderInfo {
-  return months === 6 ? getHalfYearReminder() : getFullYearReminder();
-}
-
 export function CalendarSetupPage({ practice, months }: CalendarSetupPageProps) {
-  const reminder = getReminder(months);
+  const reminder = getReminderForMonths(months);
 
   return (
     <PageShell>

@@ -2,6 +2,7 @@ import {
   formatGermanDate,
   getFullYearReminder,
   getHalfYearReminder,
+  getThreeMonthReminder,
 } from "@/lib/date-logic";
 import type { PracticeData } from "@/lib/practice-data";
 import { CalendarDays, Download, Signal, Wifi } from "lucide-react";
@@ -23,6 +24,7 @@ export function HeroPhoneScreen({
   optionRef,
   downloadButtonRef,
 }: HeroPhoneScreenProps) {
+  const threeMonths = getThreeMonthReminder();
   const halfYear = getHalfYearReminder();
   const fullYear = getFullYearReminder();
 
@@ -46,15 +48,21 @@ export function HeroPhoneScreen({
         </p>
       </div>
 
-      <div className="min-h-0 flex-1 overflow-hidden px-3.5 pb-5 pt-3">
-        <h2 className="font-display text-center text-[15px] leading-snug tracking-tight">
-          Wann möchten Sie erinnert werden?
+      <div className="min-h-0 flex-1 overflow-y-auto overflow-x-hidden px-3.5 pb-5 pt-3">
+        <h2 className="font-display text-center text-[14px] leading-snug tracking-tight">
+          Wann möchten Sie für die Terminbuchung erinnert werden?
         </h2>
-        <p className="mx-auto mt-1.5 max-w-[200px] text-center text-[9px] leading-relaxed text-ink-soft">
+        <p className="mx-auto mt-1 max-w-[200px] text-center text-[8px] leading-relaxed text-ink-soft">
           Ein Tipp genügt — Kalendertermin sofort herunterladen.
         </p>
 
-        <div className="mt-4 space-y-2.5">
+        <div className="mt-3 space-y-2">
+          <PhoneReminderCard
+            subtitle="3 Monate"
+            title="In 3 Monaten"
+            date={threeMonths.date}
+            label={threeMonths.label}
+          />
           <PhoneReminderCard
             cardRef={optionRef}
             subtitle="6 Monate"
@@ -104,8 +112,8 @@ function PhoneReminderCard({
       ref={cardRef}
       className={cn(
         highlighted
-          ? "rounded-2xl border bg-white p-3 shadow-[0_4px_20px_rgba(26,111,189,0.1)]"
-          : "rounded-2xl border border-[var(--border)] bg-white p-3 opacity-90",
+          ? "rounded-2xl border bg-white p-2.5 shadow-[0_4px_20px_rgba(26,111,189,0.1)]"
+          : "rounded-2xl border border-[var(--border)] bg-white p-2.5 opacity-90",
         highlighted && "border-sage/20",
         demoSelected && "ring-2 ring-sage/45 ring-offset-1 ring-offset-white",
       )}

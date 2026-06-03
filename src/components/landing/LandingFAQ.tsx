@@ -21,7 +21,7 @@ const faqs = [
   {
     question: "Wie wird der Erinnerungstermin berechnet?",
     answer:
-      "Das System kennt die Quartalslogik der Prophylaxe-Buchungen: Q1 (Jan–Mär) ab 1. Dez., Q2 (Apr–Jun) ab 1. Mär., Q3 (Jul–Sep) ab 1. Jun., Q4 (Okt–Dez) ab 1. Sep. Je nach Wahl (6 oder 12 Monate) wird der passende Buchungsstart automatisch ermittelt.",
+      "Das System kennt die Quartalslogik der Prophylaxe-Buchungen: Q1 (Jan–Mär) ab 1. Dez., Q2 (Apr–Jun) ab 1. Mär., Q3 (Jul–Sep) ab 1. Jun., Q4 (Okt–Dez) ab 1. Sep. Je nach Wahl (3, 6 oder 12 Monate) wird der passende Buchungsstart automatisch ermittelt.",
   },
   {
     question: "Kann ich meinen Link später ändern?",

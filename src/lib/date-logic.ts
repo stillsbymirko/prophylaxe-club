@@ -1,5 +1,7 @@
 export type Quarter = 1 | 2 | 3 | 4;
 
+export type ReminderMonths = 3 | 6 | 12;
+
 export interface ReminderInfo {
   date: Date;
   quarter: Quarter;
@@ -97,10 +99,37 @@ export function calculateReminderDate(
   };
 }
 
+export function getThreeMonthReminder(fromDate = new Date()): ReminderInfo {
+  return calculateReminderDate(fromDate, 3);
+}
+
 export function getHalfYearReminder(fromDate = new Date()): ReminderInfo {
   return calculateReminderDate(fromDate, 6);
 }
 
 export function getFullYearReminder(fromDate = new Date()): ReminderInfo {
   return calculateReminderDate(fromDate, 12);
+}
+
+export function getReminderForMonths(
+  months: ReminderMonths,
+  fromDate = new Date(),
+): ReminderInfo {
+  switch (months) {
+    case 3:
+      return getThreeMonthReminder(fromDate);
+    case 6:
+      return getHalfYearReminder(fromDate);
+    case 12:
+      return getFullYearReminder(fromDate);
+  }
+}
+
+export function parseReminderMonths(
+  value: string | undefined,
+): ReminderMonths | null {
+  if (value === "3" || value === "6" || value === "12") {
+    return Number(value) as ReminderMonths;
+  }
+  return null;
 }

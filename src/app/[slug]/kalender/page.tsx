@@ -2,6 +2,7 @@ import { CalendarSetupPage } from "@/components/CalendarSetupPage";
 import { Footer } from "@/components/Footer";
 import { PageShell } from "@/components/PageShell";
 import { getPublicPracticeBySlug } from "@/lib/practices-store";
+import { parseReminderMonths } from "@/lib/date-logic";
 import { AlertCircle } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -12,9 +13,8 @@ interface PageProps {
   searchParams: Promise<{ monate?: string }>;
 }
 
-function parseMonths(value: string | undefined): 6 | 12 | null {
-  if (value === "6" || value === "12") return Number(value) as 6 | 12;
-  return null;
+function parseMonths(value: string | undefined) {
+  return parseReminderMonths(value);
 }
 
 export async function generateMetadata({

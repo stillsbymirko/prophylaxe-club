@@ -7,6 +7,9 @@ import {
   formatGermanDate,
   getFullYearReminder,
   getHalfYearReminder,
+  getThreeMonthReminder,
+  type ReminderInfo,
+  type ReminderMonths,
 } from "@/lib/date-logic";
 import { downloadIcsFile } from "@/lib/ics-generator";
 import type { PracticeData } from "@/lib/practice-data";
@@ -19,10 +22,11 @@ interface PatientPageProps {
 
 export function PatientPage({ practice }: PatientPageProps) {
   const router = useRouter();
+  const threeMonths = getThreeMonthReminder();
   const halfYear = getHalfYearReminder();
   const fullYear = getFullYearReminder();
 
-  const handleDownload = (months: 6 | 12, date: Date) => {
+  const handleDownload = (months: ReminderMonths, date: Date) => {
     downloadIcsFile(practice, date);
     router.push(`/${practice.slug}/kalender?monate=${months}`);
   };
@@ -37,7 +41,7 @@ export function PatientPage({ practice }: PatientPageProps) {
             <Sparkles className="h-4 w-4 text-gold" />
           </div>
           <h2 className="font-display text-2xl leading-tight tracking-tight text-ink sm:text-3xl">
-            Wann möchten Sie erinnert werden?
+            Wann möchten Sie für die Terminbuchung erinnert werden?
           </h2>
           <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-ink-soft">
             Ein Tipp genügt — Ihr Kalendertermin wird sofort heruntergeladen.
@@ -48,13 +52,20 @@ export function PatientPage({ practice }: PatientPageProps) {
         <div className="animate-fade-up delay-2 space-y-4">
           <ReminderCard
             index={0}
+            title="In 3 Monaten"
+            subtitle="Erinnerung in 3 Monaten"
+            reminder={threeMonths}
+            onSelect={() => handleDownload(3, threeMonths.date)}
+          />
+          <ReminderCard
+            index={1}
             title="In einem halben Jahr"
             subtitle="Erinnerung in 6 Monaten"
             reminder={halfYear}
             onSelect={() => handleDownload(6, halfYear.date)}
           />
           <ReminderCard
-            index={1}
+            index={2}
             title="Im nächsten Jahr"
             subtitle="Erinnerung in 12 Monaten"
             reminder={fullYear}
@@ -87,7 +98,7 @@ function ReminderCard({
   index: number;
   title: string;
   subtitle: string;
-  reminder: ReturnType<typeof getHalfYearReminder>;
+  reminder: ReminderInfo;
   onSelect: () => void;
 }) {
   return (

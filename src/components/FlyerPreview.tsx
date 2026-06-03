@@ -20,7 +20,7 @@ export const FLYER_BACKGROUND_IMAGE = "/background_flyer.jpg";
 
 const STEPS = [
   { number: "1", title: "QR-Code scannen" },
-  { number: "2", title: "6 oder 12 Monate wählen" },
+  { number: "2", title: "3, 6 oder 12 Monate wählen" },
   { number: "3", title: "Kalendertermin speichern" },
 ] as const;
 
