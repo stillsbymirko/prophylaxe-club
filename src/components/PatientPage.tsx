@@ -1,8 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Footer } from "@/components/Footer";
-import { CalendarDownloadSuccess } from "@/components/CalendarDownloadSuccess";
 import { PageShell, SiteHeader } from "@/components/PageShell";
 import {
   formatGermanDate,
@@ -19,26 +18,18 @@ interface PatientPageProps {
 }
 
 export function PatientPage({ practice }: PatientPageProps) {
+  const router = useRouter();
   const halfYear = getHalfYearReminder();
   const fullYear = getFullYearReminder();
-  const [savedDate, setSavedDate] = useState<Date | null>(null);
 
-  const handleDownload = (date: Date) => {
+  const handleDownload = (months: 6 | 12, date: Date) => {
     downloadIcsFile(practice, date);
-    setSavedDate(date);
+    router.push(`/${practice.slug}/kalender?monate=${months}`);
   };
 
   return (
     <PageShell>
       <SiteHeader practiceName={practice.name} compact />
-
-      {savedDate && (
-        <CalendarDownloadSuccess
-          practice={practice}
-          date={savedDate}
-          onClose={() => setSavedDate(null)}
-        />
-      )}
 
       <main className="mx-auto w-full max-w-lg flex-1 px-5 py-8 sm:px-8 sm:py-12">
         <div className="animate-fade-up mb-10 text-center">
@@ -60,14 +51,14 @@ export function PatientPage({ practice }: PatientPageProps) {
             title="In einem halben Jahr"
             subtitle="Erinnerung in 6 Monaten"
             reminder={halfYear}
-            onSelect={() => handleDownload(halfYear.date)}
+            onSelect={() => handleDownload(6, halfYear.date)}
           />
           <ReminderCard
             index={1}
             title="Im nächsten Jahr"
             subtitle="Erinnerung in 12 Monaten"
             reminder={fullYear}
-            onSelect={() => handleDownload(fullYear.date)}
+            onSelect={() => handleDownload(12, fullYear.date)}
           />
         </div>
 
@@ -106,7 +97,6 @@ function ReminderCard({
       className="group relative w-full overflow-hidden rounded-3xl border border-[var(--border)] bg-surface p-5 text-left shadow-[0_8px_32px_rgba(26,36,33,0.06)] transition-all duration-300 hover:border-sage/20 hover:shadow-[0_16px_48px_rgba(26,111,189,0.12)] active:scale-[0.99] sm:p-6"
       style={{ animationDelay: `${0.1 + index * 0.08}s` }}
     >
-      {/* Gold accent bar */}
       <div className="absolute top-0 left-0 h-full w-1 bg-gradient-to-b from-gold via-gold-soft to-transparent opacity-80 transition-opacity group-hover:opacity-100" />
 
       <div className="flex items-start justify-between gap-4 pl-3">
