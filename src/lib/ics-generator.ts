@@ -1,4 +1,5 @@
 import type { PracticeData } from "./practice-data";
+import { getPzrSubsidyInfoUrl } from "./pzr-insurance-subsidies";
 import { formatGermanDate } from "./date-logic";
 
 function pad(n: number): string {
@@ -36,10 +37,13 @@ export function generateIcsFile(
   const uid = generateUid();
 
   const summary = `🦷 Prophylaxe-Termin buchen (${practice.name})`;
+  const pzrInfoUrl = getPzrSubsidyInfoUrl();
   const description = escapeIcsText(
     `Erinnerung: Die Termine für Ihr Prophylaxe-Quartal wurden freigeschaltet. ` +
       `Jetzt direkt online buchen unter: ${practice.bookingUrl} ` +
-      `oder telefonisch unter ${practice.phone}.`,
+      `oder telefonisch unter ${practice.phone}.\n\n` +
+      `Tipp: Viele Krankenkassen bezuschussen die professionelle Zahnreinigung (PZR). ` +
+      `Infos zu möglichen Zuschüssen: ${pzrInfoUrl}`,
   );
 
   return [

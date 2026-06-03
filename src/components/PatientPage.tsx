@@ -9,6 +9,7 @@ import {
 } from "@/lib/date-logic";
 import { downloadIcsFile } from "@/lib/ics-generator";
 import type { PracticeData } from "@/lib/practice-data";
+import { PzrSubsidyInfo } from "@/components/PzrSubsidyInfo";
 import { CalendarDays, Clock, Download, Sparkles } from "lucide-react";
 
 interface PatientPageProps {
@@ -58,7 +59,11 @@ export function PatientPage({ practice }: PatientPageProps) {
           />
         </div>
 
-        <p className="animate-fade-in delay-4 mt-10 flex items-center justify-center gap-2 text-center text-xs text-ink-soft">
+        <div className="animate-fade-up delay-3 mt-10">
+          <PzrSubsidyInfo />
+        </div>
+
+        <p className="animate-fade-in delay-4 mt-8 flex items-center justify-center gap-2 text-center text-xs text-ink-soft">
           <Download className="h-3.5 w-3.5 text-gold" />
           Mit Erinnerungsalarm für iPhone &amp; Android
         </p>
