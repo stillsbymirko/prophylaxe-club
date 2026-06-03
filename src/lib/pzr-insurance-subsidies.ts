@@ -1,3 +1,5 @@
+import { siteConfig } from "./site-config";
+
 export interface PzrInsuranceSubsidy {
   id: string;
   name: string;
@@ -73,6 +75,6 @@ export const pzrInsuranceSubsidies: PzrInsuranceSubsidy[] = [
 export const pzrInsurancePreviewCount = 3;
 
 export function getPzrSubsidyInfoUrl(origin?: string): string {
-  const base = origin ?? "https://prophylaxeerinnerung.de";
+  const base = origin ?? siteConfig.url;
   return `${base.replace(/\/$/, "")}/pzr-zuschuss`;
 }

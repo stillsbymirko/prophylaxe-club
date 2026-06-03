@@ -19,7 +19,7 @@ function buildEditLinkHtml(params: EditLinkEmailParams): string {
       <table width="100%" style="max-width:520px;background:#fffcf7;border:1px solid #ddd4c8;border-radius:16px;overflow:hidden;">
         <tr><td style="height:6px;background:#1a6fbd;"></td></tr>
         <tr><td style="padding:32px 28px;">
-          <p style="margin:0 0 8px;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:#b8925f;">Prophylaxe-Erinnerung</p>
+          <p style="margin:0 0 8px;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:#b8925f;">${escapeHtml(siteConfig.name)}</p>
           <h1 style="margin:0 0 16px;font-size:24px;font-weight:normal;line-height:1.3;">Ihr Bearbeitungs-Link</h1>
           <p style="margin:0 0 24px;font-size:15px;line-height:1.6;color:#4f5c58;font-family:system-ui,sans-serif;">
             Hallo,<br><br>
@@ -49,7 +49,7 @@ function buildEditLinkHtml(params: EditLinkEmailParams): string {
 }
 
 function buildEditLinkText(params: EditLinkEmailParams): string {
-  return `Prophylaxe-Erinnerung — Ihr Bearbeitungs-Link
+  return `${siteConfig.name} — Ihr Bearbeitungs-Link
 
 Hallo,
 
@@ -85,7 +85,7 @@ export async function sendEditLinkEmail(
   const apiKey = process.env.RESEND_API_KEY;
   const from =
     process.env.EMAIL_FROM ??
-    "Prophylaxe-Erinnerung <onboarding@resend.dev>";
+    `${siteConfig.name} <onboarding@resend.dev>`;
 
   if (!apiKey) {
     console.info("[email] RESEND_API_KEY fehlt — E-Mail nicht gesendet:");

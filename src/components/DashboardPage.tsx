@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Footer } from "@/components/Footer";
 import { LandingFAQ } from "@/components/landing/LandingFAQ";
+import { LandingFlyerExample } from "@/components/landing/LandingFlyerExample";
 import { LandingHero } from "@/components/landing/LandingHero";
 import { LandingHowItWorks } from "@/components/landing/LandingHowItWorks";
 import { LandingPrivacy } from "@/components/landing/LandingPrivacy";
@@ -12,6 +13,7 @@ import { PageShell, SiteHeader } from "@/components/PageShell";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { slugify, type PracticeData } from "@/lib/practice-data";
+import { siteUrlHint } from "@/lib/site-config";
 import { ArrowRight, ChevronDown } from "lucide-react";
 
 const defaultData: PracticeData = {
@@ -34,8 +36,12 @@ export function DashboardPage() {
   >({});
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
+  const [previewDemoPaused, setPreviewDemoPaused] = useState(false);
+
+  const pausePreviewDemo = () => setPreviewDemoPaused(true);
 
   const updateField = (field: keyof PracticeData, value: string) => {
+    pausePreviewDemo();
     setFormData((prev) => {
       const next = { ...prev, [field]: value };
       if (field === "name" && !prev.slug) {
@@ -135,14 +141,6 @@ export function DashboardPage() {
       <LandingHero onStart={scrollToGenerator} />
 
       <main className="mx-auto w-full max-w-6xl flex-1 px-5 pb-28 pt-10 sm:px-8 sm:pb-14 sm:pt-12">
-        <div className="animate-fade-up mb-8 lg:hidden">
-          <PracticePreview data={formData} />
-          <p className="mt-3 flex items-center justify-center gap-1 text-xs text-ink-soft">
-            <ChevronDown className="h-3.5 w-3.5 animate-bounce" />
-            Aktualisiert sich beim Tippen
-          </p>
-        </div>
-
         {/* Form + Preview */}
         <div className="grid items-start gap-8 lg:grid-cols-2 lg:gap-10 xl:gap-12">
           <section
@@ -178,6 +176,7 @@ export function DashboardPage() {
                     placeholder="Zahnärzte Ladeweg & Kollegen"
                     autoComplete="organization"
                     value={formData.name}
+                    onFocus={pausePreviewDemo}
                     onChange={(e) => updateField("name", e.target.value)}
                   />
                   {errors.name && (
@@ -196,7 +195,9 @@ export function DashboardPage() {
                       inputMode="url"
                       placeholder="https://www.denspoint.de"
                       autoComplete="url"
+                      hint="Link zur Online-Terminbuchung — z. B. Doctolib, jameda oder die Buchungsseite Ihrer Praxis-Website. Patienten öffnen ihn direkt aus dem Kalendertermin."
                       value={formData.bookingUrl}
+                      onFocus={pausePreviewDemo}
                       onChange={(e) =>
                         updateField("bookingUrl", e.target.value)
                       }
@@ -216,6 +217,7 @@ export function DashboardPage() {
                       placeholder="030 3917644"
                       autoComplete="tel"
                       value={formData.phone}
+                      onFocus={pausePreviewDemo}
                       onChange={(e) => updateField("phone", e.target.value)}
                     />
                     {errors.phone && (
@@ -231,8 +233,13 @@ export function DashboardPage() {
                     label="Kurz-Adresse Ihrer Praxis"
                     name="slug"
                     placeholder="denspoint"
-                    hint="prophylaxeerinnerung.de/denspoint"
+                    hint={
+                      formData.slug.trim()
+                        ? `Ihr Patienten-Link und QR-Code: ${siteUrlHint(formData.slug.trim())}`
+                        : `Kurzer Name für Link & QR-Code — z. B. „denspoint" → ${siteUrlHint("denspoint")}`
+                    }
                     value={formData.slug}
+                    onFocus={pausePreviewDemo}
                     onChange={(e) =>
                       updateField("slug", slugify(e.target.value))
                     }
@@ -254,7 +261,9 @@ export function DashboardPage() {
                     hint="Optional — Link zum späteren Bearbeiten."
                     autoComplete="email"
                     value={ownerEmail}
+                    onFocus={pausePreviewDemo}
                     onChange={(e) => {
+                      pausePreviewDemo();
                       setOwnerEmail(e.target.value);
                       setErrors((prev) => ({
                         ...prev,
@@ -296,7 +305,7 @@ export function DashboardPage() {
 
           <aside className="animate-fade-up delay-2 hidden lg:block lg:delay-3">
             <div className="sticky top-24">
-              <PracticePreview data={formData} />
+              <PracticePreview data={formData} demoPaused={previewDemoPaused} />
               <p className="mt-3 flex items-center justify-center gap-1 text-xs text-ink-soft">
                 <ChevronDown className="h-3.5 w-3.5 animate-bounce" />
                 Aktualisiert sich beim Tippen
@@ -308,6 +317,7 @@ export function DashboardPage() {
         {/* Marketing */}
         <div className="mt-16 space-y-16 border-t border-[var(--border)] pt-16 sm:mt-24 sm:space-y-24 sm:pt-24">
           <LandingHowItWorks />
+          <LandingFlyerExample />
           <LandingPrivacy />
           <LandingFAQ />
         </div>

@@ -1,4 +1,5 @@
 import type { PracticeData } from "./practice-data";
+import { siteConfig } from "./site-config";
 import { getPzrSubsidyInfoUrl } from "./pzr-insurance-subsidies";
 import { formatGermanDate } from "./date-logic";
 
@@ -22,7 +23,7 @@ function escapeIcsText(text: string): string {
 }
 
 function generateUid(): string {
-  return `${Date.now()}-${Math.random().toString(36).slice(2, 11)}@prophylaxeerinnerung.de`;
+  return `${Date.now()}-${Math.random().toString(36).slice(2, 11)}@${siteConfig.domain}`;
 }
 
 export function generateIcsFile(
@@ -49,7 +50,7 @@ export function generateIcsFile(
   return [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
-    "PRODID:-//Prophylaxe Erinnerung//DE",
+    `PRODID:-//${siteConfig.name}//DE`,
     "CALSCALE:GREGORIAN",
     "METHOD:PUBLISH",
     "BEGIN:VTIMEZONE",

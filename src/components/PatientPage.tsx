@@ -1,6 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { Footer } from "@/components/Footer";
+import { CalendarDownloadSuccess } from "@/components/CalendarDownloadSuccess";
 import { PageShell, SiteHeader } from "@/components/PageShell";
 import {
   formatGermanDate,
@@ -19,14 +21,24 @@ interface PatientPageProps {
 export function PatientPage({ practice }: PatientPageProps) {
   const halfYear = getHalfYearReminder();
   const fullYear = getFullYearReminder();
+  const [savedDate, setSavedDate] = useState<Date | null>(null);
+
+  const handleDownload = (date: Date) => {
+    downloadIcsFile(practice, date);
+    setSavedDate(date);
+  };
 
   return (
     <PageShell>
-      <SiteHeader
-        practiceName={practice.name}
-        subtitle="Prophylaxe-Erinnerung"
-        compact
-      />
+      <SiteHeader practiceName={practice.name} compact />
+
+      {savedDate && (
+        <CalendarDownloadSuccess
+          practice={practice}
+          date={savedDate}
+          onClose={() => setSavedDate(null)}
+        />
+      )}
 
       <main className="mx-auto w-full max-w-lg flex-1 px-5 py-8 sm:px-8 sm:py-12">
         <div className="animate-fade-up mb-10 text-center">
@@ -48,14 +60,14 @@ export function PatientPage({ practice }: PatientPageProps) {
             title="In einem halben Jahr"
             subtitle="Erinnerung in 6 Monaten"
             reminder={halfYear}
-            onSelect={() => downloadIcsFile(practice, halfYear.date)}
+            onSelect={() => handleDownload(halfYear.date)}
           />
           <ReminderCard
             index={1}
             title="Im nächsten Jahr"
             subtitle="Erinnerung in 12 Monaten"
             reminder={fullYear}
-            onSelect={() => downloadIcsFile(practice, fullYear.date)}
+            onSelect={() => handleDownload(fullYear.date)}
           />
         </div>
 

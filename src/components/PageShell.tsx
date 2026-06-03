@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { LogoBadge } from "@/components/Logo";
+import { siteConfig } from "@/lib/site-config";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { useState, type ReactNode } from "react";
@@ -20,7 +20,6 @@ export function PageShell({ children, className }: PageShellProps) {
 }
 
 interface SiteHeaderProps {
-  subtitle?: string;
   compact?: boolean;
   practiceName?: string;
 }
@@ -32,7 +31,6 @@ const homeNavLinks = [
 ];
 
 export function SiteHeader({
-  subtitle = "Prophylaxe-Erinnerung",
   compact = false,
   practiceName,
 }: SiteHeaderProps) {
@@ -49,19 +47,10 @@ export function SiteHeader({
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <div className="flex items-center gap-4">
           <Link href="/" className="group flex min-w-0 flex-1 items-center gap-3">
-            <LogoBadge className="transition-transform duration-300 group-hover:scale-[1.03]" />
             <div className="min-w-0">
               <p className="truncate font-display text-base leading-tight tracking-tight text-ink sm:text-xl">
-                {practiceName ?? "Prophylaxe-Erinnerung"}
+                {practiceName ?? siteConfig.name}
               </p>
-              {!practiceName && (
-                <p className="truncate text-[11px] tracking-wide text-ink-soft uppercase sm:text-xs">
-                  {subtitle}
-                </p>
-              )}
-              {practiceName && (
-                <p className="truncate text-sm text-ink-soft">{subtitle}</p>
-              )}
             </div>
           </Link>
 

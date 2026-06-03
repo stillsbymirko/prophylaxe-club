@@ -2,6 +2,7 @@ import { PatientPage } from "@/components/PatientPage";
 import { Footer } from "@/components/Footer";
 import { PageShell } from "@/components/PageShell";
 import { getPublicPracticeBySlug } from "@/lib/practices-store";
+import { siteConfig } from "@/lib/site-config";
 import { AlertCircle } from "lucide-react";
 import Link from "next/link";
 import type { Metadata } from "next";
@@ -19,7 +20,7 @@ export async function generateMetadata({
   if (practice) {
     return {
       title: practice.name,
-      description: `Prophylaxe-Erinnerung für ${practice.name}. Kalendertermin herunterladen — 100% anonym.`,
+      description: `${siteConfig.name} für ${practice.name}. Kalendertermin herunterladen — 100% anonym.`,
     };
   }
 

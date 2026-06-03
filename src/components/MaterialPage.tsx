@@ -197,7 +197,7 @@ export function MaterialPage({
   return (
     <PageShell className="material-page">
       <div className="no-print">
-        <SiteHeader subtitle="Druckmaterial" practiceName={practice.name} />
+        <SiteHeader practiceName={practice.name} />
 
         <main className="mx-auto w-full max-w-6xl flex-1 px-5 py-8 sm:px-8 sm:py-10">
           <Link

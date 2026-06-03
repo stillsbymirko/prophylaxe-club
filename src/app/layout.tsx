@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Fraunces, IBM_Plex_Sans } from "next/font/google";
+import { siteConfig } from "@/lib/site-config";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -16,12 +17,12 @@ const ibmPlexSans = IBM_Plex_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: "Prophylaxe-Erinnerung",
-    template: "%s · Prophylaxe-Erinnerung",
+    default: siteConfig.name,
+    template: `%s · ${siteConfig.name}`,
   },
   description:
     "DSGVO-konformer Link-Generator für Prophylaxe-Kalendererinnerungen in Zahnarztpraxen. Keine Patientendaten — Kalenderdownload direkt im Browser.",
-  metadataBase: new URL("https://prophylaxeerinnerung.de"),
+  metadataBase: new URL(siteConfig.url),
 };
 
 export default function RootLayout({
@@ -34,7 +35,10 @@ export default function RootLayout({
       lang="de"
       className={`${fraunces.variable} ${ibmPlexSans.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-white text-ink">
+      <body
+        suppressHydrationWarning
+        className="min-h-full flex flex-col bg-white text-ink"
+      >
         {children}
       </body>
     </html>

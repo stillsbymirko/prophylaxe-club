@@ -1,9 +1,10 @@
 import { LandingSection } from "./LandingSection";
+import { siteConfig } from "@/lib/site-config";
 import { cn } from "@/lib/utils";
 
 const faqs = [
   {
-    question: "Kostet Prophylaxe-Erinnerung etwas?",
+    question: `Kostet ${siteConfig.name} etwas?`,
     answer:
       "Der Link-Generator ist derzeit kostenlos nutzbar. Es entstehen keine versteckten Kosten für Ihre Praxis oder Ihre Patienten.",
   },

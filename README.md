@@ -1,4 +1,4 @@
-# Prophylaxe-Erinnerung
+# prophylaxe.club
 
 Privacy-first, DSGVO-konforme Web-App für Zahnarztpraxen zur Erstellung von Kalender-Erinnerungslinks für Patienten.
 
@@ -7,7 +7,7 @@ Privacy-first, DSGVO-konforme Web-App für Zahnarztpraxen zur Erstellung von Kal
 - **Praxis-Dashboard** (`/`): Link-Generator mit Live-Vorschau und QR-Code
 - **Patienten-Landingpage** (`/[slug]`): Ein-Klick-Kalenderdownload (.ics)
 - **Keine Patientendaten**: Es werden ausschließlich Praxis-Stammdaten gespeichert (Name, URL, Telefon)
-- **Kurze URLs**: `prophylaxeerinnerung.de/denspoint`
+- **Kurze URLs**: `prophylaxe.club/denspoint`
 - **Smart Date Logic**: Automatische Berechnung der Buchungs-Quartale
 - **VALARM**: Push-Benachrichtigung auf iOS & Android
 
