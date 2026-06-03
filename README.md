@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Prophylaxe-Erinnerung
 
-## Getting Started
+Privacy-first, DSGVO-konforme Web-App für Zahnarztpraxen zur Erstellung von Kalender-Erinnerungslinks für Patienten.
 
-First, run the development server:
+## Features
+
+- **Praxis-Dashboard** (`/`): Link-Generator mit Live-Vorschau und QR-Code
+- **Patienten-Landingpage** (`/[slug]`): Ein-Klick-Kalenderdownload (.ics)
+- **Keine Patientendaten**: Es werden ausschließlich Praxis-Stammdaten gespeichert (Name, URL, Telefon)
+- **Kurze URLs**: `prophylaxeerinnerung.de/denspoint`
+- **Smart Date Logic**: Automatische Berechnung der Buchungs-Quartale
+- **VALARM**: Push-Benachrichtigung auf iOS & Android
+
+## Entwicklung
 
 ```bash
+npm install
+cp .env.local.example .env.local   # optional: Upstash-Credentials für lokales Redis
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ohne `.env.local` werden Praxisdaten lokal in `data/practices.json` gespeichert.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Öffnen Sie [http://localhost:3000](http://localhost:3000).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deployment auf Vercel
 
-## Learn More
+1. Repository mit GitHub verbinden
+2. Projekt in Vercel importieren
+3. **Upstash Redis** über den [Vercel Marketplace](https://vercel.com/marketplace/upstash) verbinden
+4. Deploy (oder Redeploy nach Integration)
 
-To learn more about Next.js, take a look at the following resources:
+Upstash setzt `UPSTASH_REDIS_REST_URL` und `UPSTASH_REDIS_REST_TOKEN` automatisch. Praxisdaten werden dann in Redis gespeichert — kurze URLs wie `/denspoint` funktionieren dauerhaft.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Tech Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Next.js 16 (App Router)
+- TypeScript
+- Tailwind CSS
+- Lucide Icons
+- qrcode.react
+- Upstash Redis
